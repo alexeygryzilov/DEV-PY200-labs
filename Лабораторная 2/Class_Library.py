@@ -11,6 +11,7 @@ BOOKS_DATABASE = [
     }
 ]
 
+
 class Book:
 
     def __init__(self, id_: int, name: str, pages: int):
@@ -18,16 +19,16 @@ class Book:
         self.name = name
         self.pages = pages
 
-
     def __str__(self) -> str:
         return f'Книга "{self.name}"'
 
-    def __repr__(self)-> str:
+    def __repr__(self) -> str:
         return f'Book(id_={self.id_!r}, name={self.name!r}, pages={self.pages!r})'
+
 
 class Library:
 
-    def __init__(self, books = None):
+    def __init__(self, books=None):
         if not books:
             self.books = []
         else:
@@ -43,13 +44,14 @@ class Library:
 
     def get_index_by_book_id(self, idx) -> (int, str):
         id_list = [Book.id_ for Book in list_books]
-        if idx in id_list:
-            return id_list.index(idx)
+        if idx not in id_list:
+            raise ValueError("Книги с запрашиваемым id не существует")
         else:
-            raise ValueError ("Книги с запрашиваемым id не существует")
-
-
-
+            count = 0
+            for id_ in id_list:
+                while id_ != idx:
+                    count += 1
+                return count
 
 
 if __name__ == '__main__':
